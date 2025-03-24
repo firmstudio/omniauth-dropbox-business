@@ -13,11 +13,13 @@ module OmniAuth
         token_url: "https://api.dropbox.com/oauth2/token"
       }
 
-      uid { raw_info["team_id"] }
+      uid do
+        access_token.token ? raw_info["team_member_id"] : nil
+      end
 
       info do
         {
-          "uid" => raw_info["team_id"],
+          "uid" => raw_info["team_member_id"],
           "name" => raw_info["profile"]["name"]["display_name"],
           "email" => raw_info["profile"]["email"]
         }
